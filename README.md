@@ -1,40 +1,93 @@
-# Hello Kubernetes Flask App
+# Flask Application with Docker & Kubernetes
 
-A simple Flask application that serves a greeting and includes a health check route.
+A simple Flask web application containerized using Docker and deployed on Kubernetes (Minikube).
 
-## Prerequisites
+## Tech Stack
 
-- Python 3.8+
-- pip (Python package installer)
+- Python 3
+- Flask
+- Docker
+- Kubernetes
+- Minikube
 
-## Installation
+## Project Structure
 
-Install the required dependencies:
-
-```bash
-pip install -r requirements.txt
+```
+.
+├── app.py
+├── Dockerfile
+├── requirements.txt
+├── deployment.yml
+├── service.yml
+└── README.md
 ```
 
-## Running the Application
+## Steps Performed
 
-Start the Flask development server:
+1. Created a Flask web application.
+2. Created a Python virtual environment.
+3. Installed project dependencies.
+4. Built a Docker image.
+5. Ran and tested the container locally.
+6. Loaded the Docker image into Minikube.
+7. Created a Kubernetes Deployment with 2 replicas.
+8. Exposed the application using a NodePort Service.
+9. Accessed the application through the browser.
+
+## Build Docker Image
 
 ```bash
-python app.py
+docker build -t shreyayys/flask-app:latest .
 ```
 
-The application will start on `http://localhost:5000`.
+## Run Docker Container
 
-## API Endpoints
+```bash
+docker run -d -p 5001:5001 shreyayys/flask-app:latest
+```
 
-- **Root Route (`/`)**: Returns a plain text greeting message.
-  ```bash
-  curl http://localhost:5000/
-  # Output: hello kubernetes
-  ```
+## Load Image into Minikube
 
-- **Health Check Route (`/health`)**: Returns a JSON object indicating the application's health status.
-  ```bash
-  curl http://localhost:5000/health
-  # Output: {"status":"healthy"}
-  ```
+```bash
+minikube image load shreyayys/flask-app:latest
+```
+
+## Deploy to Kubernetes
+
+```bash
+kubectl apply -f deployment.yml
+kubectl apply -f service.yml
+```
+
+## Verify Resources
+
+```bash
+kubectl get deployments
+kubectl get pods
+kubectl get services
+```
+
+## Access the Application
+
+```bash
+minikube service flask-app-service
+```
+
+## Cleanup
+
+```bash
+kubectl delete deployment basic-flask-app
+kubectl delete service flask-app-service
+```
+
+## Learning Outcomes
+
+- Docker image creation
+- Docker container execution
+- Kubernetes Pods
+- Deployments
+- ReplicaSets
+- Labels & Selectors
+- NodePort Services
+- Minikube
+- Basic Kubernetes networking
