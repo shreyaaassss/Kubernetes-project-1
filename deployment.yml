@@ -23,5 +23,15 @@ spec:
       - name: practice-k8
         image: shreyayys/flask-app:latest
         imagePullPolicy: IfNotPresent
+
+        volumeMounts:
+        - name: db-connection
+          mountPath: /opt
+
         ports:
         - containerPort: 5001
+
+      volumes:
+      - name: db-connection
+        configMap:
+          name: test-configmap
